@@ -3,9 +3,10 @@ import React from 'react'
 import { useScrollTop } from '@/hooks/use-scroll-top'
 import { cn } from '@/lib/utils';
 import Logo from './Logo';
+import Link from 'next/link';
 import { ModeToggle } from '@/components/mode-toggle';
 import { useConvexAuth } from 'convex/react';
-import { SignInButton } from '@clerk/clerk-react';
+import { SignInButton, UserButton } from '@clerk/clerk-react';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/Spinner';
 const Navbar = () => {
@@ -22,12 +23,25 @@ const Navbar = () => {
           {
             ! isAuthenticated && !isLoading && 
             <>
-              <SignInButton mode='modal'>
+              <SignInButton mode='modal' signUpForceRedirectUrl={"/"}>
                 <Button variant={"ghost"} size={"sm"}>Log in</Button>
               </SignInButton>
-              <SignInButton mode='modal'>
+              <SignInButton mode='modal' signUpForceRedirectUrl={"/"}>
                 <Button  size={"sm"}>Get Gotion free</Button>
               </SignInButton>
+            </>
+          }
+
+          {
+            isAuthenticated && !isLoading &&
+             <>
+             <Button variant={"ghost"} size={"sm"}>
+              <Link href="/dashboard">
+                Enter Gotion
+              </Link>
+             </Button>
+              <UserButton afterSignOutUrl='/' />
+
             </>
           }
             <ModeToggle />
