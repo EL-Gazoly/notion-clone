@@ -1,6 +1,8 @@
 const DocumentsPage = () => {
     return ( 
-        <div></div>
+        <div>
+            this is documented DocumentsPage
+        </div>
      );
 }
  

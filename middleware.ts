@@ -8,8 +8,7 @@ const isProtectedRoute = createRouteMatcher([
 ]);
 
 export default clerkMiddleware((auth, req, next) => {
-  if (isProtectedRoute(req)) next;
-  else  auth().protect();
+
 });
 
 export const config = {
