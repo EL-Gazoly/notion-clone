@@ -13,7 +13,7 @@ const UserItem = () => {
     return ( 
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <div role="button" className=" felx items-center p-3 w-full hover:bg-primary/5 text-sm">
+                <div role="button" className=" `felx items-center p-3 w-full hover:bg-primary/5 text-sm">
                     <div className=" flex items-center gap-x-2 max-w-[150px]">
                         <Avatar className=" h-5 w-5">
                             <AvatarImage src={user?.imageUrl} />

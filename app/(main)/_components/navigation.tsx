@@ -6,6 +6,8 @@ import { useMediaQuery } from "usehooks-ts";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import UserItem from "./user-item";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
 const Navigation = () => {
     const pathname = usePathname();
     const isMobile = useMediaQuery("(max-width: 768px)");
@@ -14,6 +16,8 @@ const Navigation = () => {
     const isResizingRef = useRef(false);
     const [isRestting, setIsRestting] = useState(false);
     const [isCollapsed, setIsCollapsed] = useState(isMobile);
+
+    const documents = useQuery(api.documents.get, { });
 
     useEffect(() => {
         isMobile ? collapse() : resetWidth();
@@ -95,9 +99,12 @@ const Navigation = () => {
                     <ChevronsLeft className="w-6 h-6" />
                 </div>
                 <UserItem />
-                <div className=" mt-4">
-                    <p>Documents</p>
-                </div>
+                {documents?.map((document) => (
+                    <div key={document._id} className=" p-2">
+                        {document.title}
+                    </div>
+                
+                ))}
                 <div 
                     onMouseDown={handelMouseDown}
                     onClick={resetWidth}
