@@ -6,10 +6,11 @@ import { useMediaQuery } from "usehooks-ts";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import UserItem from "./user-item";
-import { useQuery, useMutation } from "convex/react";
+import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { toast } from "sonner";
-import Item from './item';
+import Item from './item';import DocumentList from "./document-list";
+``
 const Navigation = () => {
     const pathname = usePathname();
     const isMobile = useMediaQuery("(max-width: 768px)");
@@ -19,7 +20,7 @@ const Navigation = () => {
     const [isRestting, setIsRestting] = useState(false);
     const [isCollapsed, setIsCollapsed] = useState(isMobile);
 
-    const documents = useQuery(api.documents.get, { });
+
     const create = useMutation(api.documents.create);
 
     useEffect(() => {
@@ -127,12 +128,9 @@ const Navigation = () => {
                     label="New Page"
                     Icon={CirclePlusIcon}
                 />
-                {documents?.map((document) => (
-                    <div key={document._id} className=" p-2">
-                        {document.title}
-                    </div>
-                
-                ))}
+                <DocumentList />
+
+               
                 <div 
                     onMouseDown={handelMouseDown}
                     onClick={resetWidth}
