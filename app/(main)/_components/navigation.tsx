@@ -1,13 +1,15 @@
 "use client";
 
-import { ChevronsLeft, MenuIcon } from "lucide-react";
+import { ChevronsLeft, MenuIcon, CirclePlusIcon, SearchIcon, Settings } from "lucide-react";
 import { useState, useRef, ElementRef, useEffect } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import UserItem from "./user-item";
-import { useQuery } from "convex/react";
+import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
+import { toast } from "sonner";
+import Item from './item';
 const Navigation = () => {
     const pathname = usePathname();
     const isMobile = useMediaQuery("(max-width: 768px)");
@@ -18,6 +20,7 @@ const Navigation = () => {
     const [isCollapsed, setIsCollapsed] = useState(isMobile);
 
     const documents = useQuery(api.documents.get, { });
+    const create = useMutation(api.documents.create);
 
     useEffect(() => {
         isMobile ? collapse() : resetWidth();
@@ -82,10 +85,19 @@ const Navigation = () => {
             }, 300);
         }
     }
+
+    const handelCreate = async () => {
+        const promise = create({ title : "Untitled" });
+        toast.promise(promise, {
+            loading : "Creating a new document...",
+            success : "Document created successfully",
+            error : "Failed to create document"
+        })
+    }
     
 
     return ( 
-        <>
+        <div className=" w-60">
             <aside ref={asideRef} className={cn(" group/sidebar h-full w-60 bg-secondary  relative flex flex-col overflow-y-auto z-[99999]", 
                     isRestting && "transition-all duration-300 ease-in-out",
                     isCollapsed && "w-0"       
@@ -99,6 +111,22 @@ const Navigation = () => {
                     <ChevronsLeft className="w-6 h-6" />
                 </div>
                 <UserItem />
+                <Item 
+                    onClick={()=>{}}
+                    label="Search"
+                    Icon={SearchIcon}
+                    isSearch
+                />
+                <Item 
+                    onClick={()=>{}}
+                    label="Settings"
+                    Icon={Settings}
+                />
+                <Item 
+                    onClick={handelCreate}
+                    label="New Page"
+                    Icon={CirclePlusIcon}
+                />
                 {documents?.map((document) => (
                     <div key={document._id} className=" p-2">
                         {document.title}
@@ -125,7 +153,7 @@ const Navigation = () => {
                     </nav>
             </div>
 
-        </>
+        </div>
      );
 }
  
