@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronsLeft, MenuIcon, CirclePlusIcon, SearchIcon, Settings } from "lucide-react";
+import { ChevronsLeft, MenuIcon, CirclePlusIcon, SearchIcon, Settings, Plus, Trash } from "lucide-react";
 import { useState, useRef, ElementRef, useEffect } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import { cn } from "@/lib/utils";
@@ -10,6 +10,12 @@ import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { toast } from "sonner";
 import Item from './item';import DocumentList from "./document-list";
+import { 
+    Popover
+    , PopoverTrigger
+    , PopoverContent
+ } from "@/components/ui/popover";
+import TrashBox from "./trash-box";
 ``
 const Navigation = () => {
     const pathname = usePathname();
@@ -129,7 +135,25 @@ const Navigation = () => {
                     Icon={CirclePlusIcon}
                 />
                 <DocumentList />
-
+                <Item 
+                    onClick={handelCreate}
+                    label="Add a page"
+                    Icon={Plus}
+                />
+                <Popover>
+                    <PopoverTrigger className=" w-full mt-4">
+                        <Item 
+                            label="Trash"
+                            Icon={Trash}
+                        />
+                    </PopoverTrigger>
+                    <PopoverContent 
+                        className=" p-0 w-72"
+                        side={isMobile ? "bottom" : "right"}
+                    >
+                    <TrashBox />
+                    </PopoverContent>
+                </Popover>
                
                 <div 
                     onMouseDown={handelMouseDown}
