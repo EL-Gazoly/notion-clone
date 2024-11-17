@@ -1,15 +1,13 @@
 import { create } from "zustand";
 
-type SearchStore = {
+type CoverImageStates = {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
-  toggle: () => void;
 };
 
-export const useSearch = create<SearchStore>((set, get) => ({
+export const useCoverImage = create<CoverImageStates>((set) => ({
   isOpen: false,
   onOpen: () => set({ isOpen: true }),
   onClose: () => set({ isOpen: false }),
-  toggle: () => set((state) => ({ isOpen: !state.isOpen })),
 }));

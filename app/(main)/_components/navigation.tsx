@@ -136,10 +136,10 @@ const Navigation = () => {
         )}
       >
         <div
-          className=" w-6 h-6 text-muted-foreground hover:bg-neutral-300
-                    dark:hover:bg-neutral-600 rounded-sm flex items-center justify-center
-                    cursor-pointer absolute top-3 right-2 opacity-0 group-hover/sidebar:opacity-100
-                "
+          className={cn(
+            " w-6 h-6 text-muted-foreground hover:bg-neutral-300 dark:hover:bg-neutral-600 rounded-sm flex items-center justify-center cursor-pointer absolute top-3 right-2 opacity-0 group-hover/sidebar:opacity-100",
+            isMobile && "opacity-100"
+          )}
           onClick={collapse}
         >
           <ChevronsLeft className="w-6 h-6" />
@@ -174,7 +174,7 @@ const Navigation = () => {
         ref={navRef}
         key={key}
         className={cn(
-          " absolute top-0 left-60 w-[calc(100%-240px)] z-[99999]",
+          " absolute top-0 left-60 w-[calc(100%-240px)] z-[9999]",
           isRestting && "transition-all duration-300 ease-in-out",
           isMobile && "left-0 w-full"
         )}
