@@ -12,7 +12,7 @@ import { useEdgeStore } from "@/lib/edgestore";
 import { Skeleton } from "./ui/skeleton";
 type CoverProps = {
   url?: string;
-  preview?: string;
+  preview?: boolean;
 };
 
 const Cover = ({ url, preview }: CoverProps) => {
@@ -40,7 +40,9 @@ const Cover = ({ url, preview }: CoverProps) => {
         url && "bg-muted"
       )}
     >
-      {!!url && <Image src={url} fill alt="cover" className="object-cover" />}
+      {!!url && (
+        <Image src={url} fill alt="cover" className="object-cover w-full" />
+      )}
       {url && !preview && (
         <div className=" opacity-0  group-hover:opacity-100 absolute bottom-5 right-5 flex items-center gap-x-2">
           <Button
