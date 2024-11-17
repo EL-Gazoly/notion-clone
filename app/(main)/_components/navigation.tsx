@@ -12,7 +12,7 @@ import {
 import { useState, useRef, ElementRef, useEffect, use } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import { cn } from "@/lib/utils";
-import { useParams, usePathname } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import UserItem from "./user-item";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
@@ -29,6 +29,7 @@ import Navbar from "./navbar";
 const Navigation = () => {
   const pathname = usePathname();
   const params = useParams();
+  const router = useRouter();
   const isMobile = useMediaQuery("(max-width: 768px)");
   const asideRef = useRef<ElementRef<"aside">>(null);
   const navRef = useRef<ElementRef<"div">>(null);
@@ -117,7 +118,9 @@ const Navigation = () => {
   };
 
   const handelCreate = async () => {
-    const promise = create({ title: "Untitled" });
+    const promise = create({ title: "Untitled" }).then((documentId) => {
+      router.push(`/documents/${documentId}`);
+    });
     toast.promise(promise, {
       loading: "Creating a new document...",
       success: "Document created successfully",
