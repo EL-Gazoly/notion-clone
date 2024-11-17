@@ -54,6 +54,23 @@ export const getById = query({
   },
 });
 
+export const getSearch = query({
+  handler: async (ctx) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) {
+      throw new Error("Unauthenticated");
+    }
+    const userId = identity.subject;
+    const documents = ctx.db
+      .query("documents")
+      .withIndex("by_userId", (q) => q.eq("userId", userId))
+      .filter((doc) => doc.eq(doc.field("isArchived"), false))
+      .order("desc")
+      .collect();
+    return documents;
+  },
+});
+
 export const create = mutation({
   args: {
     title: v.string(),
