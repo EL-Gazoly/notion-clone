@@ -6,6 +6,7 @@ import { Id } from "@/convex/_generated/dataModel";
 import { MenuIcon } from "lucide-react";
 import Title from "./title";
 import Banner from "./banner";
+import Menu from "./Menu";
 type NavbarProps = {
   isCollapsed: boolean;
   onResetWidth: () => void;
@@ -17,13 +18,16 @@ const Navbar = ({ isCollapsed, onResetWidth }: NavbarProps) => {
   });
   if (document === undefined)
     return (
-      <nav className=" bg-background dark:bg-[#1f1f1f] px-3 py-2 w-full flex items-center gap-x-4">
+      <nav className=" bg-background dark:bg-[#1f1f1f] px-3 py-2 w-full flex items-center justify-between gap-x-4">
         <Title.Skeleton />
+        <div className=" flex items-center gap-x-2">
+          <Menu.Skeleton />
+        </div>
       </nav>
     );
   if (document === null) return null;
   return (
-    <div className=" w-full bg-background dark:bg-[#1f1f1f] px-3 py-2  flex items-center gap-x-4">
+    <nav className=" w-full bg-background dark:bg-[#1f1f1f] px-3 py-2  flex flex-col gap-x-4">
       {isCollapsed && (
         <MenuIcon
           role="button"
@@ -31,13 +35,15 @@ const Navbar = ({ isCollapsed, onResetWidth }: NavbarProps) => {
           onClick={onResetWidth}
         />
       )}
-      {document.isArchived && <Banner documentId={document._id} />}
-      {!document.isArchived && (
-        <div className=" flex items-center justify-between">
-          <Title initalData={document} />
+
+      <div className=" w-full flex items-center justify-between">
+        <Title initalData={document} />
+        <div className=" flex items-center  gap-x-2">
+          <Menu documentId={document._id} />
         </div>
-      )}
-    </div>
+      </div>
+      {document.isArchived && <Banner documentId={document._id} />}
+    </nav>
   );
 };
 
