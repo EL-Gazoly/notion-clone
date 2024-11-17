@@ -20,6 +20,7 @@ import { toast } from "sonner";
 import Item from "./item";
 import DocumentList from "./document-list";
 import { useSearch } from "@/hooks/use-search";
+import { useSettings } from "@/hooks/use-settings";
 import {
   Popover,
   PopoverTrigger,
@@ -40,6 +41,7 @@ const Navigation = () => {
   const [key, setKey] = useState(0);
 
   const search = useSearch();
+  const settings = useSettings();
 
   const create = useMutation(api.documents.create);
 
@@ -157,7 +159,7 @@ const Navigation = () => {
           Icon={SearchIcon}
           isSearch
         />
-        <Item onClick={() => {}} label="Settings" Icon={Settings} />
+        <Item onClick={settings.onOpen} label="Settings" Icon={Settings} />
         <Item onClick={handelCreate} label="New Page" Icon={CirclePlusIcon} />
         <DocumentList />
         <Item onClick={handelCreate} label="Add a page" Icon={Plus} />
